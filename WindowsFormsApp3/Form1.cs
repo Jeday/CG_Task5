@@ -22,6 +22,48 @@ namespace WindowsFormsApp3
             point_list = new List<PointF>();
         }
 
+
+        /// <summary>
+        ///  Считает, пересекаются ли отрезки (p1,p2) и (p3,p4). 
+        ///  
+        /// </summary>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <param name="p3"></param>
+        /// <param name="p4"></param>
+        /// <returns></returns>
+        private bool FindIntersection(PointF p1, PointF p2, PointF p3, PointF p4,out PointF intersection)
+        {
+            // Get the segments' parameters.
+            float dx12 = p2.X - p1.X;
+            float dy12 = p2.Y - p1.Y;
+            float dx34 = p4.X - p3.X;
+            float dy34 = p4.Y - p3.Y;
+
+            // Solve for t1 and t2
+            float denominator = (dy12 * dx34 - dx12 * dy34);
+
+            float t1 = ((p1.X - p3.X) * dy34 + (p3.Y - p1.Y) * dx34) / denominator;
+            if (float.IsInfinity(t1))
+            {
+                // The lines are parallel (or close enough to it).
+                intersection = new PointF(float.NaN, float.NaN);
+                return false;
+            }
+            
+
+            float t2 = ((p3.X - p1.X) * dy12 + (p1.Y - p3.Y) * dx12) / -denominator;
+
+            // Find the point of intersection.
+            intersection = new PointF(p1.X + dx12 * t1, p1.Y + dy12 * t1);
+
+            // The segments intersect if t1 and t2 are between 0 and 1.
+            return  ((t1 >= 0) && (t1 <= 1) &&  (t2 >= 0) && (t2 <= 1));
+            
+        }
+
+
+
         private void pictureBox1_Click(object sender, EventArgs e)
         {
 
