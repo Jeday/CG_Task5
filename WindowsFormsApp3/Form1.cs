@@ -30,6 +30,7 @@ namespace WindowsFormsApp3
         private void Form1_Load(object sender, EventArgs e)
         {
             g = pictureBox1.CreateGraphics();
+            comboBox1.Text = "Line";
         }
 
         private void label1_Click(object sender, EventArgs e)
