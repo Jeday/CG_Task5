@@ -104,7 +104,6 @@
             this.label1.Size = new System.Drawing.Size(70, 23);
             this.label1.TabIndex = 6;
             this.label1.Text = "Offset X";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
@@ -147,7 +146,6 @@
             this.label4.Size = new System.Drawing.Size(45, 23);
             this.label4.TabIndex = 10;
             this.label4.Text = "Turn";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // comboBox1
             // 
@@ -191,7 +189,6 @@
             this.checkBox1.TabIndex = 16;
             this.checkBox1.Text = "Place Point";
             this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // checkBox2
             // 

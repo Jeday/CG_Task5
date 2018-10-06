@@ -15,7 +15,6 @@ namespace WindowsFormsApp3
         Graphics g;
         List<PointF> point_list;
         bool done_placing = false;
-        bool placepoint_click = false;
         List<PointF> pred_point;
 
         public Form1()
@@ -35,7 +34,7 @@ namespace WindowsFormsApp3
         /// <param name="p3"></param>
         /// <param name="p4"></param>
         /// <returns></returns>
-        private bool FindIntersection(PointF p1, PointF p2, PointF p3, PointF p4,out PointF intersection)
+        private bool FindIntersection(PointF p1, PointF p2, PointF p3, PointF p4, out PointF intersection)
         {
             // Get the segments' parameters.
             float dx12 = p2.X - p1.X;
@@ -54,7 +53,6 @@ namespace WindowsFormsApp3
                 return false;
             }
             
-
             float t2 = ((p3.X - p1.X) * dy12 + (p1.Y - p3.Y) * dx12) / -denominator;
 
             // Find the point of intersection.
@@ -62,9 +60,7 @@ namespace WindowsFormsApp3
 
             // The segments intersect if t1 and t2 are between 0 and 1.
             return  ((t1 >= 0) && (t1 <= 1) &&  (t2 >= 0) && (t2 <= 1));
-            
         }
-
 
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -78,16 +74,6 @@ namespace WindowsFormsApp3
             comboBox1.Text = "Line";
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void trackBar2_Scroll(object sender, EventArgs e)
         {
 
@@ -98,16 +84,36 @@ namespace WindowsFormsApp3
 
         }
 
-        private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
+        void point_in_polygon(PointF n)
         {
-            if (done_placing)
+            if (point_list.Contains(n))
+                g.DrawEllipse(new Pen(Color.Chocolate), new Rectangle((int)n.X - 1, (int)n.Y - 1, 3, 3));
+            else
             {
-                point_list.Clear();
-            }
+                int cnt_intersec = 0;
+                PointF intersec;
+                PointF finish = new PointF(0, 0);
+                for(var i = 0; i < point_list.Count - 1; ++i)
+                {
+                    if (FindIntersection(n, finish, point_list[i], point_list[i + 1], out intersec) && intersec != point_list[i])
+                        ++cnt_intersec;
+                }
 
-            if (checkBox1.Checked && pred_point.Count == 2)
+                if (FindIntersection(n, finish, point_list[point_list.Count - 1], point_list[0], out intersec) && intersec != point_list[point_list.Count - 1])
+                    ++cnt_intersec;
+
+                if (cnt_intersec % 2 != 0)     // принадлежит многоугольнику
+                    g.DrawEllipse(new Pen(Color.Blue), new Rectangle((int)n.X - 1, (int)n.Y - 1, 3, 3));
+                else                           // не принадлежит
+                    g.DrawEllipse(new Pen(Color.Green), new Rectangle((int)n.X - 1, (int)n.Y - 1, 3, 3));
+            }
+        }
+
+        private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
+        {        
+            if (checkBox1.Checked && point_list.Count == 2)
             {
-                float pos = (pred_point[1].X - pred_point[0].X) * (e.Y - pred_point[0].Y) - (pred_point[1].Y - pred_point[0].Y) * (e.X - pred_point[0].X);
+                float pos = (point_list[1].X - point_list[0].X) * (e.Y - point_list[0].Y) - (point_list[1].Y - point_list[0].Y) * (e.X - point_list[0].X);
                 if (pos < 0.0)            // слева
                     g.DrawEllipse(new Pen(Color.Blue), new Rectangle(e.X - 1, e.Y - 1, 3, 3));
                 else if (pos > 0.0)       // справа
@@ -115,8 +121,16 @@ namespace WindowsFormsApp3
                 else                     // на прямой
                     g.DrawEllipse(new Pen(Color.Chocolate), new Rectangle(e.X - 1, e.Y - 1, 3, 3));
             }
+            else if (checkBox1.Checked && point_list.Count > 2)
+            {
+                point_in_polygon(new Point(e.X, e.Y));
+            }
             else
             {
+                if (done_placing)
+                {
+                    point_list.Clear();
+                }
                 done_placing = false;
                 point_list.Add(new PointF(e.X, e.Y));
                 g.DrawEllipse(new Pen(Color.Red), new Rectangle(e.X - 1, e.Y - 1, 3, 3));
@@ -138,26 +152,11 @@ namespace WindowsFormsApp3
                 else if (comboBox1.Text == "Polygon")
                     g.DrawLines(new Pen(Color.Black), point_list.Concat(new List<PointF> { point_list.First() }).ToArray());
             }
-
             
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-
-          
-        }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBox1.Checked && point_list.Count == 2)
-            {
-                pred_point.Add(point_list[0]);
-                pred_point.Add(point_list[1]);
-                placepoint_click = true;
-            }
-            else if (checkBox1.Checked == false)
-                pred_point.Clear();
         }
     }
 }
