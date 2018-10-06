@@ -55,10 +55,10 @@
             this.pictureBox1.BackColor = System.Drawing.Color.White;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Location = new System.Drawing.Point(17, 20);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.pictureBox1.Location = new System.Drawing.Point(15, 17);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(645, 634);
+            this.pictureBox1.Size = new System.Drawing.Size(565, 539);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
@@ -68,29 +68,29 @@
             // trackBar1
             // 
             this.trackBar1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.trackBar1.Location = new System.Drawing.Point(670, 412);
-            this.trackBar1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.trackBar1.Location = new System.Drawing.Point(586, 350);
+            this.trackBar1.Margin = new System.Windows.Forms.Padding(4);
             this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(379, 56);
+            this.trackBar1.Size = new System.Drawing.Size(332, 56);
             this.trackBar1.TabIndex = 2;
             // 
             // trackBar2
             // 
             this.trackBar2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.trackBar2.Location = new System.Drawing.Point(670, 538);
-            this.trackBar2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.trackBar2.Location = new System.Drawing.Point(586, 457);
+            this.trackBar2.Margin = new System.Windows.Forms.Padding(4);
             this.trackBar2.Name = "trackBar2";
-            this.trackBar2.Size = new System.Drawing.Size(379, 56);
+            this.trackBar2.Size = new System.Drawing.Size(332, 56);
             this.trackBar2.TabIndex = 3;
             this.trackBar2.Scroll += new System.EventHandler(this.trackBar2_Scroll);
             // 
             // trackBar3
             // 
             this.trackBar3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.trackBar3.Location = new System.Drawing.Point(670, 600);
-            this.trackBar3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.trackBar3.Location = new System.Drawing.Point(586, 510);
+            this.trackBar3.Margin = new System.Windows.Forms.Padding(4);
             this.trackBar3.Name = "trackBar3";
-            this.trackBar3.Size = new System.Drawing.Size(379, 56);
+            this.trackBar3.Size = new System.Drawing.Size(332, 56);
             this.trackBar3.TabIndex = 4;
             this.trackBar3.Scroll += new System.EventHandler(this.trackBar3_Scroll);
             // 
@@ -98,7 +98,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label1.Location = new System.Drawing.Point(675, 388);
+            this.label1.Location = new System.Drawing.Point(591, 330);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(70, 23);
@@ -110,7 +110,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label2.Location = new System.Drawing.Point(675, 512);
+            this.label2.Location = new System.Drawing.Point(591, 435);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(49, 23);
@@ -120,17 +120,17 @@
             // trackBar5
             // 
             this.trackBar5.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.trackBar5.Location = new System.Drawing.Point(670, 475);
-            this.trackBar5.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.trackBar5.Location = new System.Drawing.Point(586, 404);
+            this.trackBar5.Margin = new System.Windows.Forms.Padding(4);
             this.trackBar5.Name = "trackBar5";
-            this.trackBar5.Size = new System.Drawing.Size(379, 56);
+            this.trackBar5.Size = new System.Drawing.Size(332, 56);
             this.trackBar5.TabIndex = 8;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label3.Location = new System.Drawing.Point(675, 450);
+            this.label3.Location = new System.Drawing.Point(591, 383);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(68, 23);
@@ -141,7 +141,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label4.Location = new System.Drawing.Point(675, 575);
+            this.label4.Location = new System.Drawing.Point(591, 489);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(45, 23);
@@ -149,9 +149,9 @@
             this.label4.Text = "Turn";
             this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
-
             // comboBox1
             // 
+            this.comboBox1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.comboBox1.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -159,20 +159,21 @@
             this.comboBox1.Items.AddRange(new object[] {
             "Line",
             "Polygon"});
-            this.comboBox1.Location = new System.Drawing.Point(679, 20);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.comboBox1.Location = new System.Drawing.Point(594, 17);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(4);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(144, 31);
+            this.comboBox1.Size = new System.Drawing.Size(126, 31);
             this.comboBox1.TabIndex = 14;
             // 
             // button4
             // 
+            this.button4.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button4.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
-            this.button4.Location = new System.Drawing.Point(905, 20);
-            this.button4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.button4.Location = new System.Drawing.Point(792, 17);
+            this.button4.Margin = new System.Windows.Forms.Padding(4);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(144, 31);
+            this.button4.Size = new System.Drawing.Size(126, 26);
             this.button4.TabIndex = 15;
             this.button4.Text = "Done";
             this.button4.UseVisualStyleBackColor = true;
@@ -181,9 +182,12 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(701, 126);
+            this.checkBox1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.checkBox1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.checkBox1.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.checkBox1.Location = new System.Drawing.Point(610, 110);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(103, 24);
+            this.checkBox1.Size = new System.Drawing.Size(113, 27);
             this.checkBox1.TabIndex = 16;
             this.checkBox1.Text = "Place Point";
             this.checkBox1.UseVisualStyleBackColor = true;
@@ -192,9 +196,12 @@
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(701, 195);
+            this.checkBox2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.checkBox2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.checkBox2.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.checkBox2.Location = new System.Drawing.Point(610, 170);
             this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(174, 24);
+            this.checkBox2.Size = new System.Drawing.Size(195, 27);
             this.checkBox2.TabIndex = 17;
             this.checkBox2.Text = "Place Rotation Center";
             this.checkBox2.UseVisualStyleBackColor = true;
@@ -202,19 +209,22 @@
             // checkBox3
             // 
             this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(701, 260);
+            this.checkBox3.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.checkBox3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.checkBox3.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.checkBox3.Location = new System.Drawing.Point(610, 230);
             this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(97, 24);
+            this.checkBox3.Size = new System.Drawing.Size(105, 27);
             this.checkBox3.TabIndex = 18;
             this.checkBox3.Text = "Place Line";
             this.checkBox3.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1067, 692);
+            this.ClientSize = new System.Drawing.Size(934, 588);
             this.Controls.Add(this.checkBox3);
             this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.checkBox1);
@@ -229,10 +239,10 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.trackBar5);
             this.Controls.Add(this.trackBar1);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form1";
