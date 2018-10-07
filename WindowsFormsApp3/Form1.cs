@@ -15,13 +15,13 @@ namespace WindowsFormsApp3
         Graphics g;
         List<PointF> point_list;
         bool done_placing = false;
-        List<PointF> pred_point;
+        List<PointF> two_points;
 
         public Form1()
         {
             InitializeComponent();
             point_list = new List<PointF>();
-            pred_point = new List<PointF>();
+            two_points = new List<PointF>();
         }
 
 
@@ -109,6 +109,14 @@ namespace WindowsFormsApp3
             }
         }
 
+        private void point_of_intersection()
+        {
+            PointF intersec;
+            if (FindIntersection(two_points[0], two_points[1], point_list[0], point_list[1], out intersec))
+                g.DrawEllipse(new Pen(Color.Fuchsia, 4), new Rectangle((int)intersec.X - 1, (int)intersec.Y - 1, 4, 4));
+            two_points.Clear();
+        }
+
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {        
             if (checkBox1.Checked && point_list.Count == 2)
@@ -125,12 +133,26 @@ namespace WindowsFormsApp3
             {
                 point_in_polygon(new Point(e.X, e.Y));
             }
+            else if (checkBox3.Checked && point_list.Count == 2)
+            {
+                if (two_points.Count < 2)
+                {
+                    two_points.Add(new PointF(e.X, e.Y));
+                    g.DrawEllipse(new Pen(Color.Red), new Rectangle(e.X - 1, e.Y - 1, 3, 3));
+                }
+                if (two_points.Count == 2)
+                {
+                    g.DrawLines(new Pen(Color.Black), two_points.ToArray());
+                    point_of_intersection();
+                }
+            }
             else
             {
                 if (done_placing)
                 {
                     point_list.Clear();
                 }
+                   
                 done_placing = false;
                 point_list.Add(new PointF(e.X, e.Y));
                 g.DrawEllipse(new Pen(Color.Red), new Rectangle(e.X - 1, e.Y - 1, 3, 3));
@@ -157,6 +179,12 @@ namespace WindowsFormsApp3
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
+        }
+
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!checkBox3.Checked)
+                two_points.Clear();
         }
     }
 }
