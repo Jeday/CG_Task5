@@ -81,11 +81,15 @@
             // trackBar2
             // 
             this.trackBar2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.trackBar2.LargeChange = 1;
             this.trackBar2.Location = new System.Drawing.Point(586, 457);
             this.trackBar2.Margin = new System.Windows.Forms.Padding(4);
+            this.trackBar2.Maximum = 11;
+            this.trackBar2.Minimum = 1;
             this.trackBar2.Name = "trackBar2";
             this.trackBar2.Size = new System.Drawing.Size(332, 45);
             this.trackBar2.TabIndex = 3;
+            this.trackBar2.Value = 1;
             this.trackBar2.Scroll += new System.EventHandler(this.ValueChanged);
             // 
             // trackBar3

@@ -132,21 +132,22 @@ namespace WindowsFormsApp3
             int t = trackBar3.Value; // angle
             float tx = trackBar1.Value; // offset x;
             float ty = trackBar5.Value; // offset y
-            float scale = trackBar2.Value; // scale
+            float scale_x = (float)((trackBar2.Value - 6)/2.5); // scale x
+            float scale_y = (float)((trackBar2.Value - 6)/2.5); // scale y
 
 
             float[,] transferalMatrix = new float[,] { { 1, 0, 0 }, { 0, 1, 0 }, { tx, ty, 1 } };
             float[,] transferalToXYMatrix = new float[,] { { 1, 0, 0 }, { 0, 1, 0 }, { -center.X, -center.Y, 1 } };
             float[,] rotationMatrix = new float[,] { { (float)Math.Cos(t * Math.PI / 180), (float)Math.Sin(t * Math.PI / 180), 0 }, { (float)-(Math.Sin(t * Math.PI / 180)), (float)Math.Cos(t * Math.PI / 180), 0 }, { 0, 0, 1 } };
             float[,] transferalFromXYMatrix = new float[,] { { 1, 0, 0 }, { 0, 1, 0 }, { center.X, center.Y, 1 } };
-
+            float[,] scaleMatrix = new float[,] { { scale_x, 0, 0 }, { 0, scale_y, 0 }, { 0,0, 1 } };
 
 
             transofmed_points = multiply_matrix(orignal_points, transferalMatrix);
             transofmed_points = multiply_matrix(transofmed_points, transferalToXYMatrix);
             transofmed_points = multiply_matrix(transofmed_points, rotationMatrix);
+            transofmed_points = multiply_matrix(transofmed_points, scaleMatrix);
             transofmed_points = multiply_matrix(transofmed_points, transferalFromXYMatrix);
-
 
             g.Clear(Color.White);
             g.DrawEllipse(new Pen(Color.Chocolate), new Rectangle((int)(center.X - 1.5), (int)(center.Y - 1.5), 3, 3));
@@ -256,7 +257,7 @@ namespace WindowsFormsApp3
             trackBar1.Value = 0;
             trackBar5.Value = 0;
             trackBar3.Value = 0;
-            trackBar2.Value = 0;
+            trackBar2.Value = 5;
 
             transofmed_points = new float[point_list.Count, 3];   // матрица начальных точек отрезков + столбец для матричных вычислений аффинных преобразований
             orignal_points = new float[point_list.Count, 3];
