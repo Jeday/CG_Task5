@@ -108,18 +108,11 @@ namespace WindowsFormsApp3
             return new PointF(x/cnt, y/cnt);
         }
 
-
-
-
-
-
         private void offset(float tX, float tY)
         {
             float[,] transferalMatrix = new float[,] { { 1, 0, 0 }, { 0, 1, 0 }, { tX, tY, 1 } };
 
             transofmed_points = multiply_matrix(transofmed_points, transferalMatrix);
-           
-            
            
         }
 
@@ -133,7 +126,7 @@ namespace WindowsFormsApp3
             float tx = trackBar1.Value; // offset x;
             float ty = trackBar5.Value; // offset y
             float scale_x = (float)((trackBar2.Value - 6)/2.5); // scale x
-            float scale_y = (float)((trackBar2.Value - 6)/2.5); // scale y
+            float scale_y = (float)((trackBar4.Value - 6)/2.5); // scale y
 
 
             float[,] transferalMatrix = new float[,] { { 1, 0, 0 }, { 0, 1, 0 }, { tx, ty, 1 } };
@@ -159,8 +152,6 @@ namespace WindowsFormsApp3
                 g.DrawLine(new Pen(Color.Black), transofmed_points[0, 0], transofmed_points[0, 1], transofmed_points[transofmed_points.GetLength(0) - 1, 0], transofmed_points[transofmed_points.GetLength(0) - 1, 1]);
 
         }
-
-
 
 
         void point_in_polygon(PointF n)
@@ -258,6 +249,7 @@ namespace WindowsFormsApp3
             trackBar5.Value = 0;
             trackBar3.Value = 0;
             trackBar2.Value = 5;
+            trackBar4.Value = 5;
 
             transofmed_points = new float[point_list.Count, 3];   // матрица начальных точек отрезков + столбец для матричных вычислений аффинных преобразований
             orignal_points = new float[point_list.Count, 3];
