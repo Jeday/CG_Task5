@@ -108,7 +108,8 @@ namespace WindowsFormsApp3
             {
                 g.DrawLine(new Pen(Color.Black), firstPoints[i, 0], firstPoints[i, 1], secondPoints[i, 0], secondPoints[i, 1]);
             }
-            g.DrawLine(new Pen(Color.Black), firstPoints[0, 0], firstPoints[0, 1], secondPoints[secondPoints.GetLength(0)-1, 0], secondPoints[secondPoints.GetLength(0)-1, 1]);
+            if(comboBox1.Text == "Polygon")
+                g.DrawLine(new Pen(Color.Black), firstPoints[0, 0], firstPoints[0, 1], secondPoints[secondPoints.GetLength(0)-1, 0], secondPoints[secondPoints.GetLength(0)-1, 1]);
         }
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
