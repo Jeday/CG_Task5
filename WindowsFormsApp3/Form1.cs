@@ -16,6 +16,8 @@ namespace WindowsFormsApp3
         List<PointF> point_list;
         bool done_placing = false;
         List<PointF> two_points;
+        float[,] firstFiguresPoints;
+        float[,] secondFiguresPoints;
 
         public Form1()
         {
@@ -23,7 +25,7 @@ namespace WindowsFormsApp3
             point_list = new List<PointF>();
             two_points = new List<PointF>();
         }
-
+        
 
         /// <summary>
         ///  Считает, пересекаются ли отрезки (p1,p2) и (p3,p4). 
@@ -72,6 +74,50 @@ namespace WindowsFormsApp3
         {
             g = pictureBox1.CreateGraphics();
             comboBox1.Text = "Line";
+        }
+
+        private float[,] multiply_matrix(float [,] m1, float [,] m2)
+        {
+            float[,] res = new float[m1.GetLength(0), m2.GetLength(1)];
+            for (int i = 0; i < m1.GetLength(0); i++)
+            {
+                for (int j = 0; j < m2.GetLength(1); j++)
+                {
+                    for (int k = 0; k < m2.GetLength(0); k++)
+                    {
+                        res[i, j] += m1[i, k] * m2[k, j];
+                    }
+                }
+            }
+            return res;
+        }
+
+        private void offset()
+        {
+            float tX = trackBar1.Value;
+            float tY = trackBar5.Value;
+
+            float[,] transferalMatrix = new float[,] { { 1, 0, 0 }, { 0, 1, 0 }, { tX, tY, 1 } };
+
+            float[,] firstPoints = multiply_matrix(firstFiguresPoints, transferalMatrix);
+            float[,] secondPoints = multiply_matrix(secondFiguresPoints, transferalMatrix);
+
+            g.Clear(Color.White);
+            // рисуем получившуюся фигуру
+            for (var i = 0; i < point_list.Count - 1; i++)
+            {
+                g.DrawLine(new Pen(Color.Black), firstPoints[i, 0], firstPoints[i, 1], secondPoints[i, 0], secondPoints[i, 1]);
+            }
+            g.DrawLine(new Pen(Color.Black), firstPoints[0, 0], firstPoints[0, 1], secondPoints[secondPoints.GetLength(0)-1, 0], secondPoints[secondPoints.GetLength(0)-1, 1]);
+        }
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            offset();
+        }
+
+        private void trackBar5_Scroll(object sender, EventArgs e)
+        {
+            offset();
         }
 
         private void trackBar2_Scroll(object sender, EventArgs e)
@@ -161,20 +207,32 @@ namespace WindowsFormsApp3
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if (checkBox1.Checked == false)
+            done_placing = true;
+            g.Clear(Color.White);
+            if (comboBox1.Text == "Line")
             {
-                done_placing = true;
-                g.Clear(Color.White);
-                if (comboBox1.Text == "Line")
-                {
-                    if (point_list.Count > 2)
-                        point_list = point_list.Skip(point_list.Count - 2).ToList(); // последние 2 
-                    g.DrawLines(new Pen(Color.Black), point_list.ToArray());
-                }
-                else if (comboBox1.Text == "Polygon")
-                    g.DrawLines(new Pen(Color.Black), point_list.Concat(new List<PointF> { point_list.First() }).ToArray());
+                if (point_list.Count > 2)
+                    point_list = point_list.Skip(point_list.Count - 2).ToList(); // последние 2 
+                g.DrawLines(new Pen(Color.Black), point_list.ToArray());
             }
-            
+            else if (comboBox1.Text == "Polygon")
+                g.DrawLines(new Pen(Color.Black), point_list.Concat(new List<PointF> { point_list.First() }).ToArray());
+
+            trackBar1.Value = 0;
+            trackBar5.Value = 0;
+
+            firstFiguresPoints = new float[point_list.Count - 1, 3];   // матрица начальных точек отрезков + столбец для матричных вычислений аффинных преобразований
+            secondFiguresPoints = new float[point_list.Count - 1, 3];  // матрица конечных точек отрезков + столбец для матричных вычислений аффинных преобразований
+            for (int i = 0; i < point_list.Count - 1; ++i)
+            {
+                firstFiguresPoints[i, 0] = point_list[i].X;
+                firstFiguresPoints[i, 1] = point_list[i].Y;
+                firstFiguresPoints[i, 2] = 1;
+                secondFiguresPoints[i, 0] = point_list[i + 1].X;
+                secondFiguresPoints[i, 1] = point_list[i + 1].Y;
+                secondFiguresPoints[i, 2] = 1;
+            }
+
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
@@ -186,5 +244,6 @@ namespace WindowsFormsApp3
             if (!checkBox3.Checked)
                 two_points.Clear();
         }
+
     }
 }
