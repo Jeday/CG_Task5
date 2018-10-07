@@ -94,29 +94,21 @@ namespace WindowsFormsApp3
             return res;
         }
 
-        private float center_x()
+        private PointF get_center()
         {
             float x = 0;
-            int cnt = 0;
-            for (int i = 0; i < transofmed_points.GetLength(0); ++i)
-            {
-                x += transofmed_points[i, 0];
-                cnt += 2;
-            }
-            return x / cnt;
-        }
-
-        private float center_y()
-        {
             float y = 0;
             int cnt = 0;
             for (int i = 0; i < transofmed_points.GetLength(0); ++i)
             {
+                x += transofmed_points[i, 0];
                 y += transofmed_points[i, 1];
-                cnt += 2;
+                cnt += 1;
             }
-            return y / cnt;
+            return new PointF(x/cnt, y/cnt);
         }
+
+
 
 
 
@@ -197,8 +189,7 @@ namespace WindowsFormsApp3
 
         private void point_of_intersection()
         {
-            PointF intersec;
-            if (FindIntersection(two_points[0], two_points[1], point_list[0], point_list[1], out intersec))
+            if (FindIntersection(two_points[0], two_points[1], point_list[0], point_list[1], out PointF intersec))
                 g.DrawEllipse(new Pen(Color.Fuchsia, 4), new Rectangle((int)intersec.X - 1, (int)intersec.Y - 1, 4, 4));
             two_points.Clear();
         }
@@ -207,6 +198,7 @@ namespace WindowsFormsApp3
         {
             if (checkBox2.Checked) {
                 center = e.Location;
+                g.DrawEllipse(new Pen(Color.Chocolate), new Rectangle((int)(center.X - 1.5), (int)(center.Y - 1.5), 3, 3));
             }
             else if (checkBox1.Checked && point_list.Count == 2)
             {
@@ -281,7 +273,8 @@ namespace WindowsFormsApp3
 
             }
 
-            center = new PointF(center_x(), center_y());
+            center = get_center();
+            g.DrawEllipse(new Pen(Color.Chocolate), new Rectangle((int)(center.X - 1.5), (int)(center.Y - 1.5), 3, 3));
 
         }
 
