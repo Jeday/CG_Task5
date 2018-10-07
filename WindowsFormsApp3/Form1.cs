@@ -18,12 +18,14 @@ namespace WindowsFormsApp3
         List<PointF> two_points;
         float[,] firstFiguresPoints;
         float[,] secondFiguresPoints;
+        double pred_angle;
 
         public Form1()
         {
             InitializeComponent();
             point_list = new List<PointF>();
             two_points = new List<PointF>();
+            pred_angle = 0;
         }
         
 
@@ -92,33 +94,58 @@ namespace WindowsFormsApp3
             return res;
         }
 
-        private void offset()
+        private float center_x()
         {
-            float tX = trackBar1.Value;
-            float tY = trackBar5.Value;
+            float x = 0;
+            int cnt = 0;
+            for (int i = 0; i < firstFiguresPoints.GetLength(0); ++i)
+            {
+                x += firstFiguresPoints[i, 0];
+                x += secondFiguresPoints[i, 0];
+                cnt += 2;
+            }
+            return x / cnt;
+        }
 
+        private float center_y()
+        {
+            float y = 0;
+            int cnt = 0;
+            for (int i = 0; i < firstFiguresPoints.GetLength(0); ++i)
+            {
+                y += firstFiguresPoints[i, 1];
+                y += secondFiguresPoints[i, 1];
+                cnt += 2;
+            }
+            return y / cnt;
+        }
+
+
+        private void offset(float tX, float tY)
+        {
             float[,] transferalMatrix = new float[,] { { 1, 0, 0 }, { 0, 1, 0 }, { tX, tY, 1 } };
 
-            float[,] firstPoints = multiply_matrix(firstFiguresPoints, transferalMatrix);
-            float[,] secondPoints = multiply_matrix(secondFiguresPoints, transferalMatrix);
-
+            firstFiguresPoints = multiply_matrix(firstFiguresPoints, transferalMatrix);
+            secondFiguresPoints = multiply_matrix(secondFiguresPoints, transferalMatrix);
+            
             g.Clear(Color.White);
             // рисуем получившуюся фигуру
             for (var i = 0; i < point_list.Count - 1; i++)
             {
-                g.DrawLine(new Pen(Color.Black), firstPoints[i, 0], firstPoints[i, 1], secondPoints[i, 0], secondPoints[i, 1]);
+                g.DrawLine(new Pen(Color.Black), firstFiguresPoints[i, 0], firstFiguresPoints[i, 1], secondFiguresPoints[i, 0], secondFiguresPoints[i, 1]);
             }
             if(comboBox1.Text == "Polygon")
-                g.DrawLine(new Pen(Color.Black), firstPoints[0, 0], firstPoints[0, 1], secondPoints[secondPoints.GetLength(0)-1, 0], secondPoints[secondPoints.GetLength(0)-1, 1]);
+                g.DrawLine(new Pen(Color.Black), firstFiguresPoints[0, 0], firstFiguresPoints[0, 1], secondFiguresPoints[secondFiguresPoints.GetLength(0)-1, 0], secondFiguresPoints[secondFiguresPoints.GetLength(0)-1, 1]);
         }
+
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            offset();
+            offset(trackBar1.Value, 0);
         }
 
         private void trackBar5_Scroll(object sender, EventArgs e)
         {
-            offset();
+            offset(0, trackBar5.Value);
         }
 
         private void trackBar2_Scroll(object sender, EventArgs e)
@@ -128,7 +155,37 @@ namespace WindowsFormsApp3
 
         private void trackBar3_Scroll(object sender, EventArgs e)
         {
+            double t;
+            if (pred_angle == 0)
+                t = trackBar3.Value;
+            else
+                t = pred_angle - trackBar3.Value;
 
+            pred_angle = t;
+            float x = center_x();
+            float y = center_y();
+
+            float[,] transferalToXYMatrix = new float[,] { { 1, 0, 0 }, { 0, 1, 0 }, { -x, -y, 1 } };
+            float[,] rotationMatrix = new float[,] { {(float) Math.Cos(t * Math.PI / 180), (float) Math.Sin(t * Math.PI / 180), 0 }, { (float)-(Math.Sin(t * Math.PI / 180)), (float)Math.Cos(t * Math.PI / 180), 0 }, { 0, 0, 1} };
+            float[,] transferalFromXYMatrix = new float[,] { { 1, 0, 0 }, { 0, 1, 0 }, { x, y, 1 } };
+
+            firstFiguresPoints = multiply_matrix(firstFiguresPoints, transferalToXYMatrix);
+            secondFiguresPoints = multiply_matrix(secondFiguresPoints, transferalToXYMatrix);
+
+            firstFiguresPoints = multiply_matrix(firstFiguresPoints, rotationMatrix);
+            secondFiguresPoints = multiply_matrix(secondFiguresPoints, rotationMatrix);
+
+            firstFiguresPoints = multiply_matrix(firstFiguresPoints, transferalFromXYMatrix);
+            secondFiguresPoints = multiply_matrix(secondFiguresPoints, transferalFromXYMatrix);
+
+            g.Clear(Color.White);
+            // рисуем получившуюся фигуру   
+            for (var i = 0; i < point_list.Count - 1; i++)
+            {
+                g.DrawLine(new Pen(Color.Black), firstFiguresPoints[i, 0], firstFiguresPoints[i, 1], secondFiguresPoints[i, 0], secondFiguresPoints[i, 1]);
+            }
+            if (comboBox1.Text == "Polygon")
+                g.DrawLine(new Pen(Color.Black), firstFiguresPoints[0, 0], firstFiguresPoints[0, 1], secondFiguresPoints[secondFiguresPoints.GetLength(0) - 1, 0], secondFiguresPoints[secondFiguresPoints.GetLength(0) - 1, 1]);
         }
 
         void point_in_polygon(PointF n)
@@ -221,6 +278,8 @@ namespace WindowsFormsApp3
 
             trackBar1.Value = 0;
             trackBar5.Value = 0;
+            trackBar3.Value = 0;
+            trackBar2.Value = 0;
 
             firstFiguresPoints = new float[point_list.Count - 1, 3];   // матрица начальных точек отрезков + столбец для матричных вычислений аффинных преобразований
             secondFiguresPoints = new float[point_list.Count - 1, 3];  // матрица конечных точек отрезков + столбец для матричных вычислений аффинных преобразований
