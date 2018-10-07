@@ -70,13 +70,13 @@
             this.trackBar1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.trackBar1.Location = new System.Drawing.Point(586, 350);
             this.trackBar1.Margin = new System.Windows.Forms.Padding(4);
-            this.trackBar1.Maximum = 30;
-            this.trackBar1.Minimum = -30;
+            this.trackBar1.Maximum = 200;
+            this.trackBar1.Minimum = -200;
             this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(332, 56);
+            this.trackBar1.Size = new System.Drawing.Size(332, 45);
             this.trackBar1.TabIndex = 10;
             this.trackBar1.TickFrequency = 5;
-            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            this.trackBar1.Scroll += new System.EventHandler(this.ValueChanged);
             // 
             // trackBar2
             // 
@@ -84,22 +84,21 @@
             this.trackBar2.Location = new System.Drawing.Point(586, 457);
             this.trackBar2.Margin = new System.Windows.Forms.Padding(4);
             this.trackBar2.Name = "trackBar2";
-            this.trackBar2.Size = new System.Drawing.Size(332, 56);
+            this.trackBar2.Size = new System.Drawing.Size(332, 45);
             this.trackBar2.TabIndex = 3;
-            this.trackBar2.Scroll += new System.EventHandler(this.trackBar2_Scroll);
+            this.trackBar2.Scroll += new System.EventHandler(this.ValueChanged);
             // 
             // trackBar3
             // 
             this.trackBar3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.trackBar3.Location = new System.Drawing.Point(586, 510);
             this.trackBar3.Margin = new System.Windows.Forms.Padding(4);
-            this.trackBar3.Maximum = 60;
-            this.trackBar3.Minimum = -60;
+            this.trackBar3.Maximum = 360;
             this.trackBar3.Name = "trackBar3";
-            this.trackBar3.Size = new System.Drawing.Size(332, 56);
+            this.trackBar3.Size = new System.Drawing.Size(332, 45);
             this.trackBar3.TabIndex = 4;
             this.trackBar3.TickFrequency = 5;
-            this.trackBar3.Scroll += new System.EventHandler(this.trackBar3_Scroll);
+            this.trackBar3.Scroll += new System.EventHandler(this.ValueChanged);
             // 
             // label1
             // 
@@ -108,7 +107,7 @@
             this.label1.Location = new System.Drawing.Point(591, 330);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 23);
+            this.label1.Size = new System.Drawing.Size(58, 19);
             this.label1.TabIndex = 6;
             this.label1.Text = "Offset X";
             // 
@@ -119,22 +118,22 @@
             this.label2.Location = new System.Drawing.Point(591, 435);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(49, 23);
+            this.label2.Size = new System.Drawing.Size(39, 19);
             this.label2.TabIndex = 7;
             this.label2.Text = "Scale";
             // 
             // trackBar5
             // 
             this.trackBar5.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.trackBar5.Location = new System.Drawing.Point(586, 404);
+            this.trackBar5.Location = new System.Drawing.Point(589, 403);
             this.trackBar5.Margin = new System.Windows.Forms.Padding(4);
-            this.trackBar5.Maximum = 30;
-            this.trackBar5.Minimum = -30;
+            this.trackBar5.Maximum = 200;
+            this.trackBar5.Minimum = -200;
             this.trackBar5.Name = "trackBar5";
-            this.trackBar5.Size = new System.Drawing.Size(332, 56);
+            this.trackBar5.Size = new System.Drawing.Size(332, 45);
             this.trackBar5.TabIndex = 8;
             this.trackBar5.TickFrequency = 5;
-            this.trackBar5.Scroll += new System.EventHandler(this.trackBar5_Scroll);
+            this.trackBar5.Scroll += new System.EventHandler(this.ValueChanged);
             // 
             // label3
             // 
@@ -143,7 +142,7 @@
             this.label3.Location = new System.Drawing.Point(591, 383);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(69, 23);
+            this.label3.Size = new System.Drawing.Size(58, 19);
             this.label3.TabIndex = 9;
             this.label3.Text = "Offset Y";
             // 
@@ -154,7 +153,7 @@
             this.label4.Location = new System.Drawing.Point(591, 489);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(45, 23);
+            this.label4.Size = new System.Drawing.Size(37, 19);
             this.label4.TabIndex = 10;
             this.label4.Text = "Turn";
             // 
@@ -171,7 +170,7 @@
             this.comboBox1.Location = new System.Drawing.Point(594, 17);
             this.comboBox1.Margin = new System.Windows.Forms.Padding(4);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(126, 31);
+            this.comboBox1.Size = new System.Drawing.Size(126, 25);
             this.comboBox1.TabIndex = 14;
             // 
             // button4
@@ -196,7 +195,7 @@
             this.checkBox1.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.checkBox1.Location = new System.Drawing.Point(610, 110);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(113, 27);
+            this.checkBox1.Size = new System.Drawing.Size(92, 23);
             this.checkBox1.TabIndex = 16;
             this.checkBox1.Text = "Place Point";
             this.checkBox1.UseVisualStyleBackColor = true;
@@ -209,7 +208,7 @@
             this.checkBox2.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.checkBox2.Location = new System.Drawing.Point(610, 170);
             this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(195, 27);
+            this.checkBox2.Size = new System.Drawing.Size(158, 23);
             this.checkBox2.TabIndex = 17;
             this.checkBox2.Text = "Place Rotation Center";
             this.checkBox2.UseVisualStyleBackColor = true;
@@ -222,7 +221,7 @@
             this.checkBox3.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.checkBox3.Location = new System.Drawing.Point(610, 230);
             this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(105, 27);
+            this.checkBox3.Size = new System.Drawing.Size(86, 23);
             this.checkBox3.TabIndex = 18;
             this.checkBox3.Text = "Place Line";
             this.checkBox3.UseVisualStyleBackColor = true;
@@ -230,7 +229,7 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(934, 588);
