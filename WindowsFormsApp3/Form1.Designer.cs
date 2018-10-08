@@ -59,6 +59,7 @@
             this.pictureBox1.BackColor = System.Drawing.Color.White;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox1.Location = new System.Drawing.Point(15, 17);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
@@ -171,6 +172,7 @@
             // 
             // button4
             // 
+            this.button4.BackColor = System.Drawing.SystemColors.ControlLight;
             this.button4.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button4.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
@@ -180,7 +182,7 @@
             this.button4.Size = new System.Drawing.Size(126, 26);
             this.button4.TabIndex = 15;
             this.button4.Text = "Done";
-            this.button4.UseVisualStyleBackColor = true;
+            this.button4.UseVisualStyleBackColor = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // checkBox1
@@ -189,7 +191,7 @@
             this.checkBox1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.checkBox1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.checkBox1.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.checkBox1.Location = new System.Drawing.Point(607, 89);
+            this.checkBox1.Location = new System.Drawing.Point(595, 90);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(113, 27);
             this.checkBox1.TabIndex = 16;
@@ -203,7 +205,7 @@
             this.checkBox2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.checkBox2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.checkBox2.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.checkBox2.Location = new System.Drawing.Point(607, 149);
+            this.checkBox2.Location = new System.Drawing.Point(595, 150);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(195, 27);
             this.checkBox2.TabIndex = 17;
@@ -217,7 +219,7 @@
             this.checkBox3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.checkBox3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.checkBox3.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.checkBox3.Location = new System.Drawing.Point(607, 209);
+            this.checkBox3.Location = new System.Drawing.Point(595, 210);
             this.checkBox3.Name = "checkBox3";
             this.checkBox3.Size = new System.Drawing.Size(105, 27);
             this.checkBox3.TabIndex = 18;
