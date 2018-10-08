@@ -27,7 +27,7 @@ namespace WindowsFormsApp3
         private PointF center; // CENTER OF FIGURE
         private List<PointF> new_points; // new points
         private string figure_type; // type of figure
-        private List<PointF> check_points; // points in/out of figure
+        private List<PointF> check_points; // points in/out of figure Right/Left of Line
 
 
         ///
@@ -38,21 +38,15 @@ namespace WindowsFormsApp3
             point_list = new List<PointF>();
             two_points = new List<PointF>();
             new_points = new List<PointF>();
+            transofmed_points = new float[0,0];
+            orignal_points = new float[0, 0];
             check_points = new List<PointF>();
             figure_type = comboBox1.Text;
 
         }
         
 
-        /// <summary>
         ///  Считает, пересекаются ли отрезки (p1,p2) и (p3,p4). 
-        ///  
-        /// </summary>
-        /// <param name="p1"></param>
-        /// <param name="p2"></param>
-        /// <param name="p3"></param>
-        /// <param name="p4"></param>
-        /// <returns></returns>
         private bool FindIntersection(PointF p1, PointF p2, PointF p3, PointF p4, out PointF intersection)
         {
             // Get the segments' parameters.
@@ -139,40 +133,33 @@ namespace WindowsFormsApp3
 
 
             float[,] transferalMatrix = new float[,] { { 1, 0, 0 }, { 0, 1, 0 }, { tx, ty, 1 } };
+            float[,] scaleMatrix = new float[,] { { scale_x, 0, 0 }, { 0, scale_y, 0 }, { 0,0, 1 } };
             float[,] transferalToXYMatrix = new float[,] { { 1, 0, 0 }, { 0, 1, 0 }, { -center.X, -center.Y, 1 } };
             float[,] rotationMatrix = new float[,] { { (float)Math.Cos(t * Math.PI / 180), (float)Math.Sin(t * Math.PI / 180), 0 }, { (float)-(Math.Sin(t * Math.PI / 180)), (float)Math.Cos(t * Math.PI / 180), 0 }, { 0, 0, 1 } };
             float[,] transferalFromXYMatrix = new float[,] { { 1, 0, 0 }, { 0, 1, 0 }, { center.X, center.Y, 1 } };
-            float[,] scaleMatrix = new float[,] { { scale_x, 0, 0 }, { 0, scale_y, 0 }, { 0,0, 1 } };
 
 
             transofmed_points = multiply_matrix(orignal_points, transferalMatrix);
             transofmed_points = multiply_matrix(transofmed_points, transferalToXYMatrix);
-            transofmed_points = multiply_matrix(transofmed_points, rotationMatrix);
-            transofmed_points = multiply_matrix(transofmed_points, scaleMatrix);
+            transofmed_points = multiply_matrix(transofmed_points, scaleMatrix); //   поменайте эти две строки местами для прикола
+            transofmed_points = multiply_matrix(transofmed_points, rotationMatrix); //
             transofmed_points = multiply_matrix(transofmed_points, transferalFromXYMatrix);
 
-            g.Clear(Color.White);
-            g.DrawEllipse(new Pen(Color.Chocolate), new Rectangle((int)(center.X - 1.5), (int)(center.Y - 1.5), 3, 3));
-            for (var i = 0; i < point_list.Count - 1; i++)
-            {
-                g.DrawLine(new Pen(Color.Black), transofmed_points[i, 0], transofmed_points[i, 1], transofmed_points[i+1, 0], transofmed_points[i+1, 1]);
-            }
-            if (comboBox1.Text == "Polygon")
-                g.DrawLine(new Pen(Color.Black), transofmed_points[0, 0], transofmed_points[0, 1], transofmed_points[transofmed_points.GetLength(0) - 1, 0], transofmed_points[transofmed_points.GetLength(0) - 1, 1]);
-
+            pictureBox1.Invalidate();
         }
 
 
-        void point_in_polygon(PointF n)
+       private int point_in_polygon(PointF n)
         {
             if (point_list.Contains(n))
-                g.DrawEllipse(new Pen(Color.Chocolate), new Rectangle((int)n.X - 1, (int)n.Y - 1, 3, 3));
+                return 0;
+            //
             else
             {
                 int cnt_intersec = 0;
                 PointF intersec;
                 PointF finish = new PointF(0, 0);
-                for(var i = 0; i < point_list.Count - 1; ++i)
+                for (var i = 0; i < point_list.Count - 1; ++i)
                 {
                     if (FindIntersection(n, finish, point_list[i], point_list[i + 1], out intersec) && intersec != point_list[i])
                         ++cnt_intersec;
@@ -181,78 +168,64 @@ namespace WindowsFormsApp3
                 if (FindIntersection(n, finish, point_list[point_list.Count - 1], point_list[0], out intersec) && intersec != point_list[point_list.Count - 1])
                     ++cnt_intersec;
 
-                if (cnt_intersec % 2 != 0)     // принадлежит многоугольнику
-                    g.DrawEllipse(new Pen(Color.Blue), new Rectangle((int)n.X - 1, (int)n.Y - 1, 3, 3));
-                else                           // не принадлежит
-                    g.DrawEllipse(new Pen(Color.Green), new Rectangle((int)n.X - 1, (int)n.Y - 1, 3, 3));
+                if (cnt_intersec % 2 != 0) // принадлежит многоугольнику
+                    return 1;
+                else  // не принадлежит                 
+                    return -1;
+                
             }
         }
 
-        private void point_of_intersection()
-        {
-            if (FindIntersection(two_points[0], two_points[1], point_list[0], point_list[1], out PointF intersec))
-                g.DrawEllipse(new Pen(Color.Fuchsia, 4), new Rectangle((int)intersec.X - 1, (int)intersec.Y - 1, 4, 4));
-            two_points.Clear();
-        }
+
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
-            if (checkBox2.Checked) {
+            if (checkBox2.Checked) { // Place center
                 center = e.Location;
-                g.DrawEllipse(new Pen(Color.Chocolate), new Rectangle((int)(center.X - 1.5), (int)(center.Y - 1.5), 3, 3));
             }
-            else if (checkBox1.Checked && point_list.Count == 2)
+            else if (checkBox1.Checked) // Place Point
             {
-                float pos = (point_list[1].X - point_list[0].X) * (e.Y - point_list[0].Y) - (point_list[1].Y - point_list[0].Y) * (e.X - point_list[0].X);
-                if (pos < 0.0)            // слева
-                    g.DrawEllipse(new Pen(Color.Blue), new Rectangle(e.X - 1, e.Y - 1, 3, 3));
-                else if (pos > 0.0)       // справа
-                    g.DrawEllipse(new Pen(Color.Green), new Rectangle(e.X - 1, e.Y - 1, 3, 3));
-                else                     // на прямой
-                    g.DrawEllipse(new Pen(Color.Chocolate), new Rectangle(e.X - 1, e.Y - 1, 3, 3));
+
+                check_points.Add(e.Location);
+
             }
-            else if (checkBox1.Checked && point_list.Count > 2)
-            {
-                point_in_polygon(new Point(e.X, e.Y));
-            }
-            else if (checkBox3.Checked && point_list.Count == 2)
+            else if (checkBox3.Checked)
             {
                 if (two_points.Count < 2)
                 {
                     two_points.Add(new PointF(e.X, e.Y));
-                    g.DrawEllipse(new Pen(Color.Red), new Rectangle(e.X - 1, e.Y - 1, 3, 3));
+                    
                 }
-                if (two_points.Count == 2)
+                else 
                 {
-                    g.DrawLines(new Pen(Color.Black), two_points.ToArray());
-                    point_of_intersection();
+                    two_points.Clear();
+                    two_points.Add(new PointF(e.X, e.Y));
+ 
                 }
             }
             else
             {
-                if (done_placing)
-                {
-                    point_list.Clear();
-                }
-
-                done_placing = false;
-                point_list.Add(new PointF(e.X, e.Y));
-                g.DrawEllipse(new Pen(Color.Red), new Rectangle(e.X - 1, e.Y - 1, 3, 3));
+                new_points.Add(new PointF(e.X, e.Y));  
             }
+            pictureBox1.Invalidate();
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            done_placing = true;
-            g.Clear(Color.White);
-            if (comboBox1.Text == "Line")
+            figure_type = comboBox1.Text;
+            point_list.Clear();
+            List<PointF> t = point_list;
+            point_list = new_points;
+            new_points = t;
+            two_points.Clear();
+            check_points.Clear();
+
+            if (figure_type == "Line")
             {
                 if (point_list.Count > 2)
-                    point_list = point_list.Skip(point_list.Count - 2).ToList(); // последние 2 
-                g.DrawLines(new Pen(Color.Black), point_list.ToArray());
+                    point_list = point_list.Skip(point_list.Count - 2).ToList(); // последние 2  
             }
-            else if (comboBox1.Text == "Polygon")
-                g.DrawLines(new Pen(Color.Black), point_list.Concat(new List<PointF> { point_list.First() }).ToArray());
+           
 
             trackBar1.Value = 0;
             trackBar5.Value = 0;
@@ -275,19 +248,82 @@ namespace WindowsFormsApp3
 
             }
 
+            if(point_list.Count >0)
             center = get_center();
-            g.DrawEllipse(new Pen(Color.Chocolate), new Rectangle((int)(center.X - 1.5), (int)(center.Y - 1.5), 3, 3));
+
+            pictureBox1.Invalidate();
+
 
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
+            Graphics g = e.Graphics;
+
+         
+            for (var i = 0; i < transofmed_points.GetLength(0) - 1; i++)
+            {
+                g.DrawLine(new Pen(Color.Black), transofmed_points[i, 0], transofmed_points[i, 1], transofmed_points[i + 1, 0], transofmed_points[i + 1, 1]);
+            }
+            if (figure_type == "Polygon" && transofmed_points.GetLength(0)>1)
+                g.DrawLine(new Pen(Color.Black), transofmed_points[0, 0], transofmed_points[0, 1], transofmed_points[transofmed_points.GetLength(0) - 1, 0], transofmed_points[transofmed_points.GetLength(0) - 1, 1]);
+
+            if (point_list.Count > 0)
+                g.DrawEllipse(new Pen(Color.Chocolate), new Rectangle((int)(center.X - 1.5), (int)(center.Y - 1.5), 3, 3));
+
+            foreach(var p in new_points)
+                g.DrawEllipse(new Pen(Color.Red), new Rectangle((int)(p.X - (float)1.5), (int)(p.Y - (float)1.5), 3, 3));
+
+
+            foreach (PointF p in check_points) {
+                Point pi = new Point((int)p.X, (int)p.Y);
+                if (figure_type == "Line" && point_list.Count >0)
+                {
+                    float pos = (point_list[1].X - point_list[0].X) * (pi.Y - point_list[0].Y) - (point_list[1].Y - point_list[0].Y) * (pi.X - point_list[0].X);
+                    if (pos < 0.0)            // слева
+                        g.DrawEllipse(new Pen(Color.Blue), new Rectangle(pi.X - 1, pi.Y - 1, 3, 3));
+                    else if (pos > 0.0)       // справа
+                        g.DrawEllipse(new Pen(Color.Green), new Rectangle(pi.X - 1, pi.Y - 1, 3, 3));
+                    else                     // на прямой
+                        g.DrawEllipse(new Pen(Color.Chocolate), new Rectangle(pi.X - 1, pi.Y - 1, 3, 3));
+                }
+                else if (figure_type == "Polygon" && point_list.Count > 0) {
+                    switch (point_in_polygon(p))
+                    {
+                        case 1:
+                            g.DrawEllipse(new Pen(Color.Blue), new Rectangle(pi.X - 1, pi.Y - 1, 3, 3));
+                            break;
+                        case -1:
+                            g.DrawEllipse(new Pen(Color.Green), new Rectangle(pi.X - 1, pi.Y - 1, 3, 3));
+                            break;
+                        default:
+                        case 0:
+                            g.DrawEllipse(new Pen(Color.Chocolate), new Rectangle(pi.X - 1, pi.Y - 1, 3, 3));
+                            break;
+                    }
+                }
+            }
+
+            if (two_points.Count == 1)
+                g.DrawEllipse(new Pen(Color.Red), new Rectangle((int)two_points.First().X - 1, (int)two_points.First().Y - 1, 3, 3));
+            else if (two_points.Count == 2) {
+                g.DrawLines(new Pen(Color.Black), two_points.ToArray());
+
+                for (var i = 0; i < transofmed_points.GetLength(0) - 1; i++)
+                    if (FindIntersection(two_points[0], two_points[1], new PointF(transofmed_points[i, 0], transofmed_points[i, 1]), new PointF(transofmed_points[i + 1, 0], transofmed_points[i + 1, 1]), out PointF intersec))
+                        g.DrawEllipse(new Pen(Color.Fuchsia, 4), new Rectangle((int)intersec.X - 1, (int)intersec.Y - 1, 4, 4));
+                if (figure_type == "Polygon" && transofmed_points.GetLength(0) > 1)
+                     if (FindIntersection(two_points[0], two_points[1], new PointF(transofmed_points[0, 0], transofmed_points[0, 1]), new PointF(transofmed_points[transofmed_points.GetLength(0) - 1, 0], transofmed_points[transofmed_points.GetLength(0) - 1, 1]), out PointF intersec))
+                        g.DrawEllipse(new Pen(Color.Fuchsia, 4), new Rectangle((int)intersec.X - 1, (int)intersec.Y - 1, 4, 4));
+
+            }
+
+
         }
 
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
         {
-            if (!checkBox3.Checked)
-                two_points.Clear();
+           
         }
 
         private void checkBox2_Click(object sender, EventArgs e)
