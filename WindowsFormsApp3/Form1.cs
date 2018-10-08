@@ -151,30 +151,34 @@ namespace WindowsFormsApp3
 
        private int point_in_polygon(PointF n)
         {
-            if (point_list.Contains(n))
-                return 0;
-            //
-            else
-            {
-                int cnt_intersec = 0;
-                PointF intersec;
-                PointF finish = new PointF(0, 0);
-                for (var i = 0; i < point_list.Count - 1; ++i)
-                {
-                    if (FindIntersection(n, finish, point_list[i], point_list[i + 1], out intersec) && intersec != point_list[i])
-                        ++cnt_intersec;
-                }
 
-                if (FindIntersection(n, finish, point_list[point_list.Count - 1], point_list[0], out intersec) && intersec != point_list[point_list.Count - 1])
-                    ++cnt_intersec;
-
-                if (cnt_intersec % 2 != 0) // принадлежит многоугольнику
-                    return 1;
-                else  // не принадлежит                 
-                    return -1;
+            for (int i = 0; i < transofmed_points.GetLength(0); ++i) 
+                if (transofmed_points[i, 0] == n.X && transofmed_points[i, 1] == n.Y)
+                    return 0;
                 
+
+            int cnt_intersec = 0;
+            PointF intersec;
+            PointF finish = new PointF(0, 0);
+            for(var i = 0; i < transofmed_points.GetLength(0)-1; ++i)
+            {
+                if (FindIntersection(n, finish, new PointF(transofmed_points[i, 0], transofmed_points[i, 1]), new PointF(transofmed_points[i + 1, 0], transofmed_points[i + 1, 1]), out intersec) 
+                    && intersec != new PointF(transofmed_points[i, 0], transofmed_points[i, 1]))
+                ++cnt_intersec;
             }
+
+            PointF p1 = new PointF(transofmed_points[transofmed_points.GetLength(0) - 1, 0], transofmed_points[transofmed_points.GetLength(0) - 1, 1]);
+            PointF p2 = new PointF(transofmed_points[0, 0], transofmed_points[0, 1]);
+            if (FindIntersection(n, finish, p1, p2, out intersec) && intersec != p1)
+                ++cnt_intersec;
+
+            if (cnt_intersec % 2 != 0)     // принадлежит многоугольнику
+                return 1;
+            else                           // не принадлежит
+                return -1;
         }
+
+
 
 
 
