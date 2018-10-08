@@ -12,9 +12,9 @@ namespace WindowsFormsApp3
 {
     public partial class Form1 : Form
     {
-        Graphics g;
+        
         List<PointF> point_list;
-        bool done_placing = false;
+
 
         float[,] orignal_points;
 
@@ -76,14 +76,11 @@ namespace WindowsFormsApp3
         }
 
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
+     
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            g = pictureBox1.CreateGraphics();
+           
             comboBox1.Text = "Line";
         }
 
@@ -177,9 +174,6 @@ namespace WindowsFormsApp3
             else                           // не принадлежит
                 return -1;
         }
-
-
-
 
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
@@ -323,11 +317,6 @@ namespace WindowsFormsApp3
             }
 
 
-        }
-
-        private void checkBox3_CheckedChanged(object sender, EventArgs e)
-        {
-           
         }
 
         private void checkBox2_Click(object sender, EventArgs e)

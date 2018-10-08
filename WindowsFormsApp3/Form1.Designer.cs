@@ -65,7 +65,6 @@
             this.pictureBox1.Size = new System.Drawing.Size(563, 593);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClick);
             // 
@@ -224,7 +223,6 @@
             this.checkBox3.TabIndex = 18;
             this.checkBox3.Text = "Place Line";
             this.checkBox3.UseVisualStyleBackColor = true;
-            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
             this.checkBox3.Click += new System.EventHandler(this.checkBox2_Click);
             // 
             // label5
