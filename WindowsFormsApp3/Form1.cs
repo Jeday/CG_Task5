@@ -136,11 +136,12 @@ namespace WindowsFormsApp3
             float[,] transferalFromXYMatrix = new float[,] { { 1, 0, 0 }, { 0, 1, 0 }, { center.X, center.Y, 1 } };
 
 
-            transofmed_points = multiply_matrix(orignal_points, transferalMatrix);
-            transofmed_points = multiply_matrix(transofmed_points, transferalToXYMatrix);
+           
+            transofmed_points = multiply_matrix(orignal_points, transferalToXYMatrix);
             transofmed_points = multiply_matrix(transofmed_points, scaleMatrix); //   поменайте эти две строки местами для прикола
             transofmed_points = multiply_matrix(transofmed_points, rotationMatrix); //
             transofmed_points = multiply_matrix(transofmed_points, transferalFromXYMatrix);
+            transofmed_points = multiply_matrix(transofmed_points, transferalMatrix);
 
             pictureBox1.Invalidate();
         }
