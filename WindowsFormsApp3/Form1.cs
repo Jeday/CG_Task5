@@ -15,17 +15,32 @@ namespace WindowsFormsApp3
         Graphics g;
         List<PointF> point_list;
         bool done_placing = false;
-        List<PointF> two_points;
-        float[,] transofmed_points;
+
         float[,] orignal_points;
-        PointF center;
+
+        /// <summary>
+        ///  All data that is needed for redraw
+        /// </summary>
+
+        private List<PointF> two_points; // LONE SEGMENT
+        private float[,] transofmed_points; // MATRIX OF FIGURE
+        private PointF center; // CENTER OF FIGURE
+        private List<PointF> new_points; // new points
+        private string figure_type; // type of figure
+        private List<PointF> check_points; // points in/out of figure
+
+
+        ///
 
         public Form1()
         {
             InitializeComponent();
             point_list = new List<PointF>();
             two_points = new List<PointF>();
-           
+            new_points = new List<PointF>();
+            check_points = new List<PointF>();
+            figure_type = comboBox1.Text;
+
         }
         
 
@@ -108,13 +123,7 @@ namespace WindowsFormsApp3
             return new PointF(x/cnt, y/cnt);
         }
 
-        private void offset(float tX, float tY)
-        {
-            float[,] transferalMatrix = new float[,] { { 1, 0, 0 }, { 0, 1, 0 }, { tX, tY, 1 } };
-
-            transofmed_points = multiply_matrix(transofmed_points, transferalMatrix);
-           
-        }
+    
 
         private void ValueChanged(object sender, EventArgs e)
         {
@@ -281,5 +290,15 @@ namespace WindowsFormsApp3
                 two_points.Clear();
         }
 
+        private void checkBox2_Click(object sender, EventArgs e)
+        {
+            CheckBox c = sender as CheckBox;
+            if (c.Checked) {
+                checkBox1.Checked = false;
+                checkBox2.Checked = false;
+                checkBox3.Checked = false;
+                c.Checked = true;
+            }
+        }
     }
 }
