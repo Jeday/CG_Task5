@@ -87,12 +87,12 @@
             this.trackBar2.LargeChange = 1;
             this.trackBar2.Location = new System.Drawing.Point(586, 426);
             this.trackBar2.Margin = new System.Windows.Forms.Padding(4);
-            this.trackBar2.Maximum = 11;
-            this.trackBar2.Minimum = 1;
+            this.trackBar2.Maximum = 20;
+            this.trackBar2.Minimum = -20;
             this.trackBar2.Name = "trackBar2";
             this.trackBar2.Size = new System.Drawing.Size(332, 45);
             this.trackBar2.TabIndex = 3;
-            this.trackBar2.Value = 1;
+            this.trackBar2.Value = 10;
             this.trackBar2.Scroll += new System.EventHandler(this.ValueChanged);
             // 
             // trackBar3
@@ -243,12 +243,12 @@
             this.trackBar4.LargeChange = 1;
             this.trackBar4.Location = new System.Drawing.Point(586, 490);
             this.trackBar4.Margin = new System.Windows.Forms.Padding(4);
-            this.trackBar4.Maximum = 11;
-            this.trackBar4.Minimum = 1;
+            this.trackBar4.Maximum = 20;
+            this.trackBar4.Minimum = -20;
             this.trackBar4.Name = "trackBar4";
             this.trackBar4.Size = new System.Drawing.Size(332, 45);
             this.trackBar4.TabIndex = 20;
-            this.trackBar4.Value = 1;
+            this.trackBar4.Value = 10;
             this.trackBar4.Scroll += new System.EventHandler(this.ValueChanged);
             // 
             // label4

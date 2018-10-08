@@ -128,8 +128,8 @@ namespace WindowsFormsApp3
             int t = trackBar3.Value; // angle
             float tx = trackBar1.Value; // offset x;
             float ty = trackBar5.Value; // offset y
-            float scale_x = (float)((trackBar2.Value - 6)/2.5); // scale x
-            float scale_y = (float)((trackBar4.Value - 6)/2.5); // scale y
+            float scale_x = (float)(trackBar2.Value)/10; // scale x
+            float scale_y = (float)(trackBar4.Value)/10; // scale y
 
 
             float[,] transferalMatrix = new float[,] { { 1, 0, 0 }, { 0, 1, 0 }, { tx, ty, 1 } };
@@ -234,8 +234,8 @@ namespace WindowsFormsApp3
             trackBar1.Value = 0;
             trackBar5.Value = 0;
             trackBar3.Value = 0;
-            trackBar2.Value = 5;
-            trackBar4.Value = 5;
+            trackBar2.Value = 10;
+            trackBar4.Value = 10;
 
             transofmed_points = new float[point_list.Count, 3];   // матрица начальных точек отрезков + столбец для матричных вычислений аффинных преобразований
             orignal_points = new float[point_list.Count, 3];
