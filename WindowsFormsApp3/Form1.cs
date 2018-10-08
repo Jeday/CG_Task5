@@ -340,5 +340,14 @@ namespace WindowsFormsApp3
                 c.Checked = true;
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (point_list.Count > 0)
+            {
+                center = get_center();
+                pictureBox1.Invalidate();
+            }
+        }
     }
 }
