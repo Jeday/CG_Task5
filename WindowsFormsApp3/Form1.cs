@@ -143,7 +143,7 @@ namespace WindowsFormsApp3
             transofmed_points = multiply_matrix(transofmed_points, scaleMatrix); 
             transofmed_points = multiply_matrix(transofmed_points, rotationMatrix); 
             transofmed_points = multiply_matrix(transofmed_points, transferalFromXYMatrix);
-            transofmed_points = multiply_matrix(transofmed_points, transferalMatrix);
+            
 
 
             transofmed_points = multiply_matrix(orignal_points, transofmed_points);
