@@ -129,21 +129,24 @@ namespace WindowsFormsApp3
             float scale_y = (float)(trackBar4.Value)/10; // scale y
 
 
-            float[,] transferalMatrix = new float[,] { { 1, 0, 0 }, { 0, 1, 0 }, { tx, ty, 1 } };
+            float[,] transferalMatrix = new float[,] { { 1, 0, 0 }, { 0, 1, 0 }, { tx, -ty, 1 } };
             float[,] scaleMatrix = new float[,] { { scale_x, 0, 0 }, { 0, scale_y, 0 }, { 0,0, 1 } };
             float[,] transferalToXYMatrix = new float[,] { { 1, 0, 0 }, { 0, 1, 0 }, { -center.X, -center.Y, 1 } };
             float[,] rotationMatrix = new float[,] { { (float)Math.Cos(t * Math.PI / 180), (float)Math.Sin(t * Math.PI / 180), 0 }, { (float)-(Math.Sin(t * Math.PI / 180)), (float)Math.Cos(t * Math.PI / 180), 0 }, { 0, 0, 1 } };
             float[,] transferalFromXYMatrix = new float[,] { { 1, 0, 0 }, { 0, 1, 0 }, { center.X, center.Y, 1 } };
+            float[,] initMatrix = new float[,] { { 1, 0, 0 }, { 0, 1, 0 }, { 0, 0, 1 } };
 
 
+
+            transofmed_points =transferalMatrix;
+            transofmed_points = multiply_matrix(transofmed_points, transferalToXYMatrix);
+            transofmed_points = multiply_matrix(transofmed_points, scaleMatrix); 
+            transofmed_points = multiply_matrix(transofmed_points, rotationMatrix); 
+            transofmed_points = multiply_matrix(transofmed_points, transferalFromXYMatrix);
             
-            var _transofmed_points =transferalToXYMatrix;
-            _transofmed_points = multiply_matrix(_transofmed_points, scaleMatrix); //   поменайте эти две строки местами для прикола
-            _transofmed_points = multiply_matrix(_transofmed_points, rotationMatrix); //
-            _transofmed_points = multiply_matrix(_transofmed_points, transferalFromXYMatrix);
-            _transofmed_points = multiply_matrix(_transofmed_points, transferalMatrix);
 
-            transofmed_points = multiply_matrix(orignal_points, _transofmed_points);
+
+            transofmed_points = multiply_matrix(orignal_points, transofmed_points);
             pictureBox1.Invalidate();
         }
 
@@ -339,6 +342,16 @@ namespace WindowsFormsApp3
                 center = get_center();
                 pictureBox1.Invalidate();
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            orignal_points = transofmed_points;
+            trackBar1.Value = 0;
+            trackBar5.Value = 0;
+            trackBar3.Value = 0;
+            trackBar2.Value = 10;
+            trackBar4.Value = 10;
         }
     }
 }
