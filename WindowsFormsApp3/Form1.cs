@@ -138,12 +138,11 @@ namespace WindowsFormsApp3
 
 
 
-            transofmed_points =transferalMatrix;
-            transofmed_points = multiply_matrix(transofmed_points, transferalToXYMatrix);
+            transofmed_points = transferalToXYMatrix;
             transofmed_points = multiply_matrix(transofmed_points, scaleMatrix); 
             transofmed_points = multiply_matrix(transofmed_points, rotationMatrix); 
             transofmed_points = multiply_matrix(transofmed_points, transferalFromXYMatrix);
-            
+            transofmed_points = multiply_matrix(transofmed_points, transferalMatrix);
 
 
             transofmed_points = multiply_matrix(orignal_points, transofmed_points);
@@ -185,6 +184,13 @@ namespace WindowsFormsApp3
         {
             if (checkBox2.Checked) { // Place center
                 center = e.Location;
+                orignal_points = transofmed_points;
+                trackBar1.Value = 0;
+                trackBar5.Value = 0;
+                trackBar3.Value = 0;
+                trackBar2.Value = 10;
+                trackBar4.Value = 10;
+
             }
             else if (checkBox1.Checked) // Place Point
             {
@@ -340,7 +346,14 @@ namespace WindowsFormsApp3
             if (point_list.Count > 0)
             {
                 center = get_center();
+                orignal_points = transofmed_points;
+                trackBar1.Value = 0;
+                trackBar5.Value = 0;
+                trackBar3.Value = 0;
+                trackBar2.Value = 10;
+                trackBar4.Value = 10;
                 pictureBox1.Invalidate();
+
             }
         }
 
