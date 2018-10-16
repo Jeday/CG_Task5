@@ -136,13 +136,14 @@ namespace WindowsFormsApp3
             float[,] transferalFromXYMatrix = new float[,] { { 1, 0, 0 }, { 0, 1, 0 }, { center.X, center.Y, 1 } };
 
 
-           
-            transofmed_points = multiply_matrix(orignal_points, transferalToXYMatrix);
-            transofmed_points = multiply_matrix(transofmed_points, scaleMatrix); //   поменайте эти две строки местами для прикола
-            transofmed_points = multiply_matrix(transofmed_points, rotationMatrix); //
-            transofmed_points = multiply_matrix(transofmed_points, transferalFromXYMatrix);
-            transofmed_points = multiply_matrix(transofmed_points, transferalMatrix);
+            
+            var _transofmed_points =transferalToXYMatrix;
+            _transofmed_points = multiply_matrix(_transofmed_points, scaleMatrix); //   поменайте эти две строки местами для прикола
+            _transofmed_points = multiply_matrix(_transofmed_points, rotationMatrix); //
+            _transofmed_points = multiply_matrix(_transofmed_points, transferalFromXYMatrix);
+            _transofmed_points = multiply_matrix(_transofmed_points, transferalMatrix);
 
+            transofmed_points = multiply_matrix(orignal_points, _transofmed_points);
             pictureBox1.Invalidate();
         }
 
@@ -278,7 +279,7 @@ namespace WindowsFormsApp3
                 Point pi = new Point((int)p.X, (int)p.Y);
                 if (figure_type == "Line" && point_list.Count >0)
                 {
-                    float pos = (point_list[1].X - point_list[0].X) * (pi.Y - point_list[0].Y) - (point_list[1].Y - point_list[0].Y) * (pi.X - point_list[0].X);
+                    float pos = (transofmed_points[1, 0] - transofmed_points[0, 0]) * (pi.Y - transofmed_points[0, 1]) - (transofmed_points[1, 1] - transofmed_points[0, 1]) * (pi.X - transofmed_points[0, 0]);
                     if (pos < 0.0)            // слева
                         g.DrawEllipse(new Pen(Color.Blue), new Rectangle(pi.X - 1, pi.Y - 1, 3, 3));
                     else if (pos > 0.0)       // справа
